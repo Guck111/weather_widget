@@ -5,10 +5,11 @@ import './App.scss';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-import {ShowWeatherNow} from "./redux/actions/WeatherNow";
-import {ShowWeatherForecast} from "./redux/actions/WeatherForecast";
 import WidgetBody from "./components/WidgetBody";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+import {ShowWeatherNow} from "./redux/actions/WeatherNow";
+import {ShowWeatherForecast} from "./redux/actions/WeatherForecast";
 
 class App extends Component {
 
@@ -16,35 +17,45 @@ class App extends Component {
         super(props);
         this.state = {
             forecast: [],
-            inputValue: ''
+            inputValue: '',
+            cityImgLink: ''
         };
     }
 
     componentWillMount() {
-        this.getWeatherNow('minsk')
+        this.getWeatherNow()
     }
 
     render() {
         return (
-            this.props.weather_now.length !== 0 && <div>
-                <h1 className={'title_main'}>WEATHER WIDGET</h1>
+            this.props.weather_now.length !== 0 && <div className="widget-content">
 
-                <ErrorBoundary onWeatherNow={this.getWeatherNow.bind(this)}
-                               onWeatherForecast={this.getWeatherForecast.bind(this)}
-                               isError={this.isError.bind(this)}>
-                    <WidgetBody weatherNow={this.props.weather_now} weatherForecast={this.state.forecast}/>
-                </ErrorBoundary>
+                <div className="widget-bg" style={{'backgroundImage': `url(${this.state.cityImgLink})`}}/>
 
-                <div className="footer">
+                <div className="widget-body">
+                    <h1 className={'title_main'}>WEATHER WIDGET</h1>
 
-                    <div className="container">
-                        <div className="city-input__wrap">
-                            <input className="city-input__input" value={this.state.inputValue}
-                                   onChange={this.updateInputValue.bind(this)} placeholder={'Enter City Name'}/>
-                            <button className="city-input__btn"
-                                    onClick={() => this.getWeatherNow(this.state.inputValue)}>
-                                Check weather
-                            </button>
+                    <ErrorBoundary onWeatherNow={this.getWeatherNow.bind(this)}
+                                   onWeatherForecast={this.getWeatherForecast.bind(this)}
+                                   isError={this.isError.bind(this)}>
+                        <WidgetBody weatherNow={this.props.weather_now} weatherForecast={this.state.forecast}
+                                    cityImage={this.state.cityImgLink}/>
+                    </ErrorBoundary>
+
+                    <div className="footer">
+
+                        <div className="container">
+                            <div className="city-input__wrap">
+                                <input className="city-input__input" value={this.state.inputValue}
+                                       onChange={this.updateInputValue.bind(this)} placeholder={'Enter City Name'}/>
+                                <button className="city-input__btn"
+                                        onClick={() => {
+                                            if (this.state.inputValue)
+                                                this.getWeatherNow(this.state.inputValue);
+                                        }}>
+                                    Check weather
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,18 +63,34 @@ class App extends Component {
         );
     }
 
-    getWeatherNow(city) {
+    getCityImg(city = 'minsk') {
+
+        let cityImgUrl = '';
+
+        if(city.split(' ').length > 1){
+            cityImgUrl = city.toLowerCase().split(' ').join('_');
+        } else {
+            cityImgUrl = city.toLowerCase();
+        }
+
+        this.setState({
+            cityImgLink: `http://localhost:7788/cities/${cityImgUrl}.jpg`
+        })
+    }
+
+    getWeatherNow(city = 'minsk') {
         this.props.ShowWeatherNow(city)
             .then(() => {
+                this.getCityImg(this.props.weather_now.name);
                 return this.getWeatherForecast(city)
             })
             .then(() => {
-                if(!this.isError())
+                if (!this.isError())
                     this.clearInput();
             });
     }
 
-    getWeatherForecast(city) {
+    getWeatherForecast(city = 'minsk') {
         this.props.ShowWeatherForecast(city)
             .then(res => {
                 let forecast = res.payload.list.filter((item, index) => {

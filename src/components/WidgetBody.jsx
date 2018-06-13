@@ -27,7 +27,7 @@ class WidgetBody extends Component {
 
         return (
             <div className="container">
-                <div className="city">
+                <div className="city" style={{'backgroundImage': `url(${this.props.cityImage})`}}>
                     <div className="title">
                         <h2>{this.props.weatherNow.name} City</h2>
                         <h3>{this.props.weatherNow.sys.country}</h3>

@@ -7,20 +7,21 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+let root = document.getElementById('root');
+
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
-    </Provider>, document.getElementById('root'));
-registerServiceWorker();
+        <App root={root}/>
+    </Provider>, root);
 
-console.log('store', store.getState());
+registerServiceWorker();
 
 /**
  * следит за изменением state в store
  */
-store.subscribe(() => {
-    console.log('subscribe', store.getState());
-});
+// store.subscribe(() => {
+//     console.log('subscribe', store.getState());
+// });
 
 /**
  * событие изменения state в store
