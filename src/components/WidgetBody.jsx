@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 
 import Temperature from './Temperature'
 import CurrentTime from './CurrentTime'
@@ -29,28 +30,28 @@ class WidgetBody extends Component {
         return (
             <div className="container">
                 <CurrentTime/>
-                <div className="city">
+                <City>
                     <GoogleMap {...this.props.weatherNow.coord}/>
-                    <div className="title">
-                        <h2>{this.props.weatherNow.name} City</h2>
-                        <h3>{this.props.weatherNow.sys.country}</h3>
-                    </div>
-                    <div className="date-time">
-                        <div className="dmy">
-                            <div className="date">
+                    <TitleWrap>
+                        <H2>{this.props.weatherNow.name} City</H2>
+                        <H3>{this.props.weatherNow.sys.country}</H3>
+                    </TitleWrap>
+                    <DateTime>
+                        <Dmy>
+                            <Date>
 
-                            </div>
-                        </div>
+                            </Date>
+                        </Dmy>
 
-                        <div className="temperature">
+                        <MainTemperature>
                             {
-                                <Temperature temperature={this.props.weatherNow.main.temp}/>
+                                <Temperature main={true} temperature={this.props.weatherNow.main.temp}/>
                             }
-                        </div>
+                        </MainTemperature>
 
                         <div className="clear"/>
-                    </div>
-                </div>
+                    </DateTime>
+                </City>
 
                 <div className="forecast">
                     <div className="forecast-icon">
@@ -60,20 +61,18 @@ class WidgetBody extends Component {
                     <div className="today-weather">
                         <h3>{this.props.weatherNow.weather[0].main}</h3>
                         <ul>
-                            <li>
-                                Now <span>{<Temperature temperature={this.props.weatherNow.main.temp}/>}</span>
-                            </li>
+                            <ForecastString>
+                                <span>{<Temperature date={'Now'}  temperature={this.props.weatherNow.main.temp}/>}</span>
+                            </ForecastString>
 
                             {
                                 this.props.forecast.length && this.props.forecast.map((item, key) => {
                                     return (
-                                        <li key={key}>{item.dt_txt}
-                                            <span>
+                                        <ForecastString key={key}>
                                                 {
-                                                    <Temperature temperature={item.main.temp}/>
+                                                    <Temperature date={item.dt_txt} temperature={item.main.temp}/>
                                                 }
-                                            </span>
-                                        </li>
+                                        </ForecastString>
                                     )
                                 })
                             }
@@ -89,3 +88,61 @@ class WidgetBody extends Component {
 }
 
 export default WidgetBody;
+
+const City = styled.div`
+    width: 60%;
+    float: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;
+    position: relative;
+`;
+
+const TitleWrap = styled.div`
+        float: right;
+        font-family: 'Oxygen', sans-serif;
+        padding: 30px 30px 0 0;
+        position: relative;    
+`;
+
+const H2 = styled.h2`
+        font-size: 30px;
+        text-align: right;   
+`;
+
+const H3 = styled.h3`
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: right;  
+`;
+
+const DateTime = styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    padding: 0 30px 10px 30px;
+    font-family: 'Oxygen', sans-serif;
+`;
+
+const Dmy = styled.div`
+    width: 50%;
+    float: left;
+    text-align: left;
+    padding-top: 55px;
+`;
+
+const Date = styled.div`
+    font-size: 22px;
+`;
+
+const MainTemperature = styled.div`
+    text-align: center;
+    width: 100%;
+`;
+
+const ForecastString = styled.li`
+    margin: auto;
+    width: 73%;
+    justify-content: space-between;
+`;

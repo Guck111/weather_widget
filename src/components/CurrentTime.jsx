@@ -1,24 +1,23 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 
 class Clock extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             clock: 'hh:mm:ss tt'
         }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.startTicking()
     }
 
     render = () => (
-        <div className={'widget-clock'}>
-            {
-                this.state.clock
-            }
-        </div>
+        <Time>
+            {this.state.clock}
+        </Time>
     )
 
     oneSecond = () => 1000
@@ -103,3 +102,11 @@ class Clock extends Component {
 }
 
 export default Clock;
+
+const Time = styled.p`
+   position: absolute;
+   z-index: 1;
+   padding: 35px 40px;
+   font-size: 24px;
+   color: #000
+`;

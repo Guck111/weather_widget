@@ -157,12 +157,6 @@ body a {
   &-body{
     position: relative;
   }
-  &-clock{
-    position: absolute;
-    z-index: 1;
-    padding: 35px 40px;
-    font-size: 24px;
-  }
 }
 
 h1 {
@@ -180,47 +174,8 @@ h1 {
   background-color: rgba(0, 0, 0, 0.73);
 }
 
-.city {
-  width: 60%;
-  float: left;
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  min-height: 500px;
-  position: relative;
-}
-
-.title {
-  float: right;
-  font-family: 'Oxygen', sans-serif;
-  padding: 30px 30px 0 0;
-  position: relative;
-}
-
 .title_main {
   text-transform: uppercase;
-}
-
-.title h2 {
-  font-size: 30px;
-  text-align: right;
-}
-
-.title h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 10px;
-  text-align: right;
-}
-
-.date-time {
-  position: absolute;
-  bottom: 0;
-  width: 90%;
-  padding: 0 30px 10px 30px;
-  font-family: 'Oxygen', sans-serif;
 }
 
 div#txt {
@@ -228,13 +183,6 @@ div#txt {
   font-weight: 100;
   margin-bottom: 10px;
   letter-spacing: 1px;
-}
-
-.dmy {
-  width: 50%;
-  float: left;
-  text-align: left;
-  padding-top: 55px;
 }
 
 .temperature {
@@ -271,27 +219,6 @@ div#txt {
   border-width: thin;
   border-bottom: 1px solid #EEE;
   text-transform: capitalize;
-}
-
-.today-weather ul li {
-  width: 74%;
-  margin: 0 auto;
-  line-height: 39px;
-  border-width: thin;
-  border-bottom: 1px solid #777;
-  color: #EEE;
-  font-weight: 600;
-  text-align: left;
-  padding-left: 20px;
-}
-
-.today-weather ul li span {
-  float: right;
-  padding-right: 10px;
-}
-
-.today-weather ul li:last-child {
-  border-bottom: none;
 }
 
 .footer {
@@ -490,19 +417,8 @@ div#txt {
   div#txt {
     font-size: 30px;
   }
-  .date {
-    font-size: 22px;
-  }
-  .temperature {
-    text-align: center;
-    width: 100%;
-  }
   .copyright {
     padding: 20px;
-  }
-  .temperature p {
-    font-size: 60px;
-    padding-bottom: 15px;
   }
   .forecast-icon img {
     width: 65px;
