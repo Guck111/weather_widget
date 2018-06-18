@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 
 import WidgetBody from "./components/WidgetBody";
 import ErrorBoundary from "./components/ErrorBoundary";
+import GoogleMap from './components/GoogleMap';
 
 import {ShowWeatherNow} from "./redux/actions/WeatherNow";
 import {ShowWeatherForecast} from "./redux/actions/WeatherForecast";
@@ -30,7 +31,11 @@ class App extends Component {
         return (
             this.props.weather_now.length !== 0 && <div className="widget-content">
 
-                <div className="widget-bg" style={{'backgroundImage': `url(${this.state.cityImgLink})`}}/>
+                {/*<div className="widget-bg" style={{'backgroundImage': `url(${this.state.cityImgLink})`}}/>*/}
+                <div className="widget-bg">
+                    <GoogleMap {...this.props.weather_now.coord}/>
+                    <div className="widget-bg_color"/>
+                </div>
 
                 <div className="widget-body">
                     <h1 className={'title_main'}>WEATHER WIDGET</h1>
@@ -38,8 +43,7 @@ class App extends Component {
                     <ErrorBoundary onWeatherNow={this.getWeatherNow.bind(this)}
                                    onWeatherForecast={this.getWeatherForecast.bind(this)}
                                    isError={this.isError.bind(this)}>
-                        <WidgetBody weatherNow={this.props.weather_now} weatherForecast={this.state.forecast}
-                                    cityImage={this.state.cityImgLink}/>
+                        <WidgetBody weatherNow={this.props.weather_now} {...this.state}/>
                     </ErrorBoundary>
 
                     <div className="footer">
@@ -67,7 +71,7 @@ class App extends Component {
 
         let cityImgUrl = '';
 
-        if(city.split(' ').length > 1){
+        if (city.split(' ').length > 1) {
             cityImgUrl = city.toLowerCase().split(' ').join('_');
         } else {
             cityImgUrl = city.toLowerCase();
@@ -119,8 +123,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    weather_now: state.WeatherNow.weather,
-    weather_forecast: state.WeatherForecast.weather
+    weather_now: state.WeatherNow.weather
 });
 
 const mapDispatchToState = dispatch => bindActionCreators({

@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.post('/weather_now', function (req, response) {
     console.log('weather_now', req.body)
-    axios.get('http://api.openweathermap.org/data/2.5/weather?q=' + req.body.country + '&appid=3a3bbf1a91a9516fe29c032082b9978b')
+    axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + req.body.country + '&appid=3a3bbf1a91a9516fe29c032082b9978b')
         .then(res => {
             response.send(res.data);
         })
@@ -27,11 +27,11 @@ app.post('/weather_now', function (req, response) {
 
 app.post('/weather_forecast', function (req, response) {
     console.log('weather_forecast', req.body)
-    axios.get('http://api.openweathermap.org/data/2.5/forecast?q=' + req.body.country + '&appid=3a3bbf1a91a9516fe29c032082b9978b')
+    axios.get('https://api.openweathermap.org/data/2.5/forecast?q=' + req.body.country + '&appid=3a3bbf1a91a9516fe29c032082b9978b')
         .then(res => {
             response.send(res.data);
         })
-    // .catch(err => response.send(err.response.data));
+        .catch(err => response.send(err.response.data.cod));
 });
 
 app.listen(7788, function () {

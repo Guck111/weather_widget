@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
-import Temp from './Temp'
+import Temperature from './Temperature'
+import CurrentTime from './CurrentTime'
+import GoogleMap from './GoogleMap'
 
 import clouds from '../images/sky/clouds.png';
 import clear from '../images/sky/clear.png';
@@ -24,10 +26,11 @@ class WidgetBody extends Component {
     }
 
     render() {
-
         return (
             <div className="container">
-                <div className="city" style={{'backgroundImage': `url(${this.props.cityImage})`}}>
+                <CurrentTime/>
+                <div className="city">
+                    <GoogleMap {...this.props.weatherNow.coord}/>
                     <div className="title">
                         <h2>{this.props.weatherNow.name} City</h2>
                         <h3>{this.props.weatherNow.sys.country}</h3>
@@ -41,38 +44,44 @@ class WidgetBody extends Component {
 
                         <div className="temperature">
                             {
-                                <Temp temperature={this.props.weatherNow.main.temp}/>
+                                <Temperature temperature={this.props.weatherNow.main.temp}/>
                             }
                         </div>
 
-                        <div className="clear"></div>
+                        <div className="clear"/>
                     </div>
                 </div>
 
                 <div className="forecast">
                     <div className="forecast-icon">
                         <img src={this.state.sky[this.props.weatherNow.weather[0].main]}
-                             alt="New York Weather Widget"/>
+                             alt="Weather Widget"/>
                     </div>
                     <div className="today-weather">
                         <h3>{this.props.weatherNow.weather[0].main}</h3>
                         <ul>
                             <li>
-                                Now <span>{<Temp temperature={this.props.weatherNow.main.temp}/>}</span>
+                                Now <span>{<Temperature temperature={this.props.weatherNow.main.temp}/>}</span>
                             </li>
 
                             {
-                                this.props.weatherForecast.length && this.props.weatherForecast.map((item, key) => {
-                                    return <li key={key}>{item.dt_txt} <span> {<Temp
-                                        temperature={item.main.temp}/>} </span>
-                                    </li>
+                                this.props.forecast.length && this.props.forecast.map((item, key) => {
+                                    return (
+                                        <li key={key}>{item.dt_txt}
+                                            <span>
+                                                {
+                                                    <Temperature temperature={item.main.temp}/>
+                                                }
+                                            </span>
+                                        </li>
+                                    )
                                 })
                             }
                         </ul>
                     </div>
                 </div>
 
-                <div className="clear"></div>
+                <div className="clear"/>
 
             </div>
         )

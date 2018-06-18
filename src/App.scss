@@ -144,14 +144,24 @@ body a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
     filter: blur(5px);
+    &_color{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: #0000007a;
+    }
   }
   &-body{
     position: relative;
+  }
+  &-clock{
+    position: absolute;
+    z-index: 1;
+    padding: 35px 40px;
+    font-size: 24px;
   }
 }
 
@@ -186,6 +196,7 @@ h1 {
   float: right;
   font-family: 'Oxygen', sans-serif;
   padding: 30px 30px 0 0;
+  position: relative;
 }
 
 .title_main {
@@ -193,7 +204,6 @@ h1 {
 }
 
 .title h2 {
-  color: #FFF;
   font-size: 30px;
   text-align: right;
 }
@@ -201,7 +211,6 @@ h1 {
 .title h3 {
   font-size: 16px;
   font-weight: 600;
-  color: #EEE;
   margin-top: 10px;
   text-align: right;
 }
@@ -209,7 +218,6 @@ h1 {
 .date-time {
   position: absolute;
   bottom: 0;
-  color: #FFF;
   width: 90%;
   padding: 0 30px 10px 30px;
   font-family: 'Oxygen', sans-serif;
